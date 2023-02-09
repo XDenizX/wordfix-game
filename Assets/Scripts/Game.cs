@@ -17,6 +17,9 @@ public class Game : MonoBehaviour
     private SettingsManager settingsManager;
 
     [SerializeField]
+    private BonusManager bonusManager;
+
+    [SerializeField]
     private GameTimer timer;
 
     [SerializeField]
@@ -62,17 +65,19 @@ public class Game : MonoBehaviour
     {
         if (!EnsureEnteredText(enteredText))
             return;
-
+        
         if (enteredText.EndsWith(endingTextBlock.Text))
         {
             timer.AppendTime(GameConstants.SmallTime);
             score.Points += GameConstants.SmallScore;
+            bonusManager.OnSuccessEnter(enteredText, true);
             UpdateEnding();
         }
         else
         {
             timer.AppendTime(GameConstants.BigTime);
             score.Points += GameConstants.BigScore;
+            bonusManager.OnSuccessEnter(enteredText, false);
         }
         
         _usedWordsList.Add(enteredText);
