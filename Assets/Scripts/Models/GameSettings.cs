@@ -1,6 +1,9 @@
-﻿public class GameSettings
+﻿namespace Models
 {
-    public string DictionaryLanguage { get; set; } = "ru-ru";
-    public bool IsMusicEnabled { get; set; } = true;
-    public float MusicVolume { get; set; } = 0.5f;
+    public class GameSettings
+    {
+        public string DictionaryLanguage { get; set; } = "ru-ru";
+        public bool IsMusicEnabled { get; set; } = true;
+        public float MusicVolume { get; set; } = 0.5f;
+    }
 }

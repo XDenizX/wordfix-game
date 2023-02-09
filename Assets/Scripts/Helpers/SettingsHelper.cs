@@ -1,32 +1,36 @@
 ﻿using System.IO;
+using Models;
 using Newtonsoft.Json;
 
-public static class SettingsHelper
+namespace Helpers
 {
-    public static GameSettings Load(string filepath)
+    public static class SettingsHelper
     {
-        var text = File.ReadAllText(filepath);
-        return JsonConvert.DeserializeObject<GameSettings>(text);
-    }
-    
-    public static bool TryLoad(string filepath, out GameSettings settings)
-    {
-        try
+        public static GameSettings Load(string filepath)
         {
             var text = File.ReadAllText(filepath);
-            settings = JsonConvert.DeserializeObject<GameSettings>(text);
-            return true;
+            return JsonConvert.DeserializeObject<GameSettings>(text);
         }
-        catch
+    
+        public static bool TryLoad(string filepath, out GameSettings settings)
         {
-            settings = null;
-            return false;
+            try
+            {
+                var text = File.ReadAllText(filepath);
+                settings = JsonConvert.DeserializeObject<GameSettings>(text);
+                return true;
+            }
+            catch
+            {
+                settings = null;
+                return false;
+            }
         }
-    }
 
-    public static void Save(GameSettings setting, string filepath)
-    {
-        var jsonData = JsonConvert.SerializeObject(setting, Formatting.Indented);
-        File.WriteAllText(filepath, jsonData);
+        public static void Save(GameSettings setting, string filepath)
+        {
+            var jsonData = JsonConvert.SerializeObject(setting, Formatting.Indented);
+            File.WriteAllText(filepath, jsonData);
+        }
     }
 }

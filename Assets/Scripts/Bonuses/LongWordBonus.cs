@@ -1,21 +1,26 @@
 ﻿using System;
+using Interfaces;
+using Models;
 
-public class LongWordBonus : IBonus
+namespace Bonuses
 {
-    private const int LongWordLength = 8;
+    public class LongWordBonus : IBonus
+    {
+        private const int LongWordLength = 8;
     
-    public bool IsAvailable(BonusContext context)
-    {
-        return context.IsFullCompleted && context.Word.Length > LongWordLength;
-    }
-
-    public BonusInfo GetBonus(BonusContext context)
-    {
-        return new BonusInfo
+        public bool IsAvailable(BonusContext context)
         {
-            Title = "Длинное слово",
-            ExtraScores = 400,
-            ExtraTime = TimeSpan.FromSeconds(5)
-        };
+            return context.IsFullCompleted && context.Word.Length > LongWordLength;
+        }
+
+        public BonusInfo GetBonus(BonusContext context)
+        {
+            return new BonusInfo
+            {
+                Title = "Длинное слово",
+                ExtraScores = 400,
+                ExtraTime = TimeSpan.FromSeconds(5)
+            };
+        }
     }
 }

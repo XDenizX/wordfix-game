@@ -1,8 +1,11 @@
 ﻿using System;
 
-public class BonusInfo
+namespace Models
 {
-    public string Title { get; set; }
-    public int ExtraScores { get; set; }
-    public TimeSpan ExtraTime { get; set; }
+    public class BonusInfo
+    {
+        public string Title { get; set; }
+        public int ExtraScores { get; set; }
+        public TimeSpan ExtraTime { get; set; }
+    }
 }

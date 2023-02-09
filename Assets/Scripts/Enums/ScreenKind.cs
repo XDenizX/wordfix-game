@@ -1,10 +1,13 @@
 ﻿using System;
 
-[Serializable]
-public enum ScreenKind
+namespace Enums
 {
-    MainMenu,
-    GameScene,
-    Settings,
-    Scoreboard
+    [Serializable]
+    public enum ScreenKind
+    {
+        MainMenu,
+        GameScene,
+        Settings,
+        Scoreboard
+    }
 }

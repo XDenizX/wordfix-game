@@ -1,33 +1,39 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Enums;
+using Models;
 using UnityEngine;
+using Screen = Components.Screen;
 
-public class NavigationManager : MonoBehaviour
+namespace Managers
 {
-    [SerializeField]
-    private List<KeyValueItem<ScreenKind, Screen>> screens;
+    public class NavigationManager : MonoBehaviour
+    {
+        [SerializeField]
+        private List<KeyValueItem<ScreenKind, Screen>> screens;
 
-    private void Start()
-    {
-        ChangeScreen(ScreenKind.MainMenu);
-    }
-    
-    public void ChangeScreen(ScreenKind screenKind)
-    {
-        screens.ForEach(screenItem => screenItem.value.gameObject.SetActive(false));
-        
-        var screen = screens.FirstOrDefault(x => x.key == screenKind);
-        if (screen == null)
+        private void Start()
         {
-            throw new KeyNotFoundException($"Can not found screen by kind '{screenKind}'");
+            ChangeScreen(ScreenKind.MainMenu);
         }
-        
-        screen.value.gameObject.SetActive(true);
-    }
     
-    public void ChangeScreen(Screen screen)
-    {
-        screens.ForEach(screenItem => screenItem.value.gameObject.SetActive(false));
-        screen.gameObject.SetActive(true);
+        public void ChangeScreen(ScreenKind screenKind)
+        {
+            screens.ForEach(screenItem => screenItem.value.gameObject.SetActive(false));
+        
+            var screen = screens.FirstOrDefault(x => x.key == screenKind);
+            if (screen == null)
+            {
+                throw new KeyNotFoundException($"Can not found screen by kind '{screenKind}'");
+            }
+        
+            screen.value.gameObject.SetActive(true);
+        }
+    
+        public void ChangeScreen(Screen screen)
+        {
+            screens.ForEach(screenItem => screenItem.value.gameObject.SetActive(false));
+            screen.gameObject.SetActive(true);
+        }
     }
 }

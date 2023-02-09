@@ -1,28 +1,31 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class TextBlock : MonoBehaviour
+namespace Components
 {
-    [SerializeField]
-    private CharacterBlock characterBlockPrefab;
-
-    private readonly List<CharacterBlock> _characterBlocks = new();
-    
-    private string _text;
-    public string Text
+    public class TextBlock : MonoBehaviour
     {
-        get => _text;
-        set
+        [SerializeField]
+        private CharacterBlock characterBlockPrefab;
+
+        private readonly List<CharacterBlock> _characterBlocks = new();
+    
+        private string _text;
+        public string Text
         {
-            _text = value;
-            _characterBlocks.ForEach(block => Destroy(block.gameObject));
-            _characterBlocks.Clear();
-            
-            foreach (char character in value)
+            get => _text;
+            set
             {
-                var block = Instantiate(characterBlockPrefab, transform);
-                block.Character = character;
-                _characterBlocks.Add(block);
+                _text = value;
+                _characterBlocks.ForEach(block => Destroy(block.gameObject));
+                _characterBlocks.Clear();
+            
+                foreach (char character in value)
+                {
+                    var block = Instantiate(characterBlockPrefab, transform);
+                    block.Character = character;
+                    _characterBlocks.Add(block);
+                }
             }
         }
     }

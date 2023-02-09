@@ -1,8 +1,11 @@
 ﻿using System;
 
-[Serializable]
-public class KeyValueItem<TKey, TValue>
+namespace Models
 {
-    public TKey key;
-    public TValue value;
+    [Serializable]
+    public class KeyValueItem<TKey, TValue>
+    {
+        public TKey key;
+        public TValue value;
+    }
 }

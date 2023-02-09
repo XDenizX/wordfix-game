@@ -1,17 +1,23 @@
-﻿using UnityEngine;
+﻿using Constants;
+using Helpers;
+using Models;
+using UnityEngine;
 
-public class SettingsManager : MonoBehaviour
+namespace Managers
 {
-    public GameSettings Settings { get; private set; }
-
-    private void Start()
+    public class SettingsManager : MonoBehaviour
     {
-        SettingsHelper.TryLoad(Paths.SettingsRelativePath, out var settings);
-        Settings = settings ?? new GameSettings();
-    }
+        public GameSettings Settings { get; private set; }
 
-    private void OnApplicationQuit()
-    {
-        SettingsHelper.Save(Settings, Paths.SettingsRelativePath);
+        private void Start()
+        {
+            SettingsHelper.TryLoad(Paths.SettingsRelativePath, out var settings);
+            Settings = settings ?? new GameSettings();
+        }
+
+        private void OnApplicationQuit()
+        {
+            SettingsHelper.Save(Settings, Paths.SettingsRelativePath);
+        }
     }
 }

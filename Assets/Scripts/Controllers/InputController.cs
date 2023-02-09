@@ -2,80 +2,83 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputController : MonoBehaviour
+namespace Controllers
 {
-    private const char NullCharacter = default;
-    private const char ReturnCharacter = (char)10;
-    
-    public event EventHandler<char> KeyPressed;
-    public event EventHandler ReturnPressed;
-    public event EventHandler BackspacePressed;
-
-    private readonly List<KeyCode> _pressedKeyCodes = new();
-
-    public void OnGUI()
+    public class InputController : MonoBehaviour
     {
-        Event currentEvent = Event.current;
+        private const char NullCharacter = default;
+        private const char ReturnCharacter = (char)10;
+    
+        public event EventHandler<char> KeyPressed;
+        public event EventHandler ReturnPressed;
+        public event EventHandler BackspacePressed;
 
-        if (currentEvent.type == EventType.KeyUp)
+        private readonly List<KeyCode> _pressedKeyCodes = new();
+
+        public void OnGUI()
         {
-            ReleasePressedKey(currentEvent.keyCode);
-            return;
+            Event currentEvent = Event.current;
+
+            if (currentEvent.type == EventType.KeyUp)
+            {
+                ReleasePressedKey(currentEvent.keyCode);
+                return;
+            }
+
+            if (currentEvent.type != EventType.KeyDown)
+                return;
+
+            // Ignoring key releasing events.
+            if (IsKeyPressed(currentEvent.keyCode))
+                return;
+
+            ProcessPressEvent(currentEvent);
         }
 
-        if (currentEvent.type != EventType.KeyDown)
-            return;
-
-        // Ignoring key releasing events.
-        if (IsKeyPressed(currentEvent.keyCode))
-            return;
-
-        ProcessPressEvent(currentEvent);
-    }
-
-    private void ProcessPressEvent(Event pressEvent)
-    {
-        switch (pressEvent.keyCode)
+        private void ProcessPressEvent(Event pressEvent)
         {
-            case KeyCode.Return:
+            switch (pressEvent.keyCode)
             {
-                AddPressedKey(pressEvent.keyCode);
-                ReturnPressed?.Invoke(this, EventArgs.Empty);
-                break;
-            }
-            case KeyCode.Backspace:
-            {
-                AddPressedKey(pressEvent.keyCode);
-                BackspacePressed?.Invoke(this, EventArgs.Empty);
-                break;
-            }
-            default:
-            {
-                if (pressEvent.character is NullCharacter or ReturnCharacter)
+                case KeyCode.Return:
+                {
+                    AddPressedKey(pressEvent.keyCode);
+                    ReturnPressed?.Invoke(this, EventArgs.Empty);
                     break;
+                }
+                case KeyCode.Backspace:
+                {
+                    AddPressedKey(pressEvent.keyCode);
+                    BackspacePressed?.Invoke(this, EventArgs.Empty);
+                    break;
+                }
+                default:
+                {
+                    if (pressEvent.character is NullCharacter or ReturnCharacter)
+                        break;
 
-                AddPressedKey(pressEvent.keyCode);
-                KeyPressed?.Invoke(this, pressEvent.character);
-                break;
+                    AddPressedKey(pressEvent.keyCode);
+                    KeyPressed?.Invoke(this, pressEvent.character);
+                    break;
+                }
             }
         }
-    }
     
-    private void AddPressedKey(KeyCode keyCode)
-    {
-        if (keyCode == KeyCode.None)
-            return;
+        private void AddPressedKey(KeyCode keyCode)
+        {
+            if (keyCode == KeyCode.None)
+                return;
         
-        _pressedKeyCodes.Add(keyCode);
-    }
+            _pressedKeyCodes.Add(keyCode);
+        }
 
-    private bool IsKeyPressed(KeyCode keyCode)
-    {
-        return _pressedKeyCodes.Contains(keyCode);
-    }
+        private bool IsKeyPressed(KeyCode keyCode)
+        {
+            return _pressedKeyCodes.Contains(keyCode);
+        }
 
-    private void ReleasePressedKey(KeyCode keyCode)
-    {
-        _pressedKeyCodes.Remove(keyCode);
+        private void ReleasePressedKey(KeyCode keyCode)
+        {
+            _pressedKeyCodes.Remove(keyCode);
+        }
     }
 }

@@ -1,6 +1,11 @@
-﻿public interface IBonus
-{
-    public bool IsAvailable(BonusContext context);
+﻿using Models;
 
-    public BonusInfo GetBonus(BonusContext context);
+namespace Interfaces
+{
+    public interface IBonus
+    {
+        public bool IsAvailable(BonusContext context);
+
+        public BonusInfo GetBonus(BonusContext context);
+    }
 }

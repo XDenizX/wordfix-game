@@ -1,19 +1,22 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class CharacterBlock : MonoBehaviour
+namespace Components
 {
-    [SerializeField]
-    private TextMeshProUGUI characterText;
-
-    private char _character;
-    public char Character
+    public class CharacterBlock : MonoBehaviour
     {
-        get => _character;
-        set
+        [SerializeField]
+        private TextMeshProUGUI characterText;
+
+        private char _character;
+        public char Character
         {
-            _character = value;
-            characterText.text = value.ToString();
+            get => _character;
+            set
+            {
+                _character = value;
+                characterText.text = value.ToString();
+            }
         }
     }
 }

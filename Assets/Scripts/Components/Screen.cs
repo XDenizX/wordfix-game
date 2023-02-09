@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public class Screen : MonoBehaviour
+namespace Components
 {
+    public class Screen : MonoBehaviour
+    {
     
+    }
 }

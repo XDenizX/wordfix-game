@@ -1,19 +1,24 @@
 ﻿using System;
+using Interfaces;
+using Models;
 
-public class ComboBonus : IBonus
+namespace Bonuses
 {
-    public bool IsAvailable(BonusContext context)
+    public class ComboBonus : IBonus
     {
-        return context.IsFullCompleted && context.FullAnswersCount > 1;
-    }
-
-    public BonusInfo GetBonus(BonusContext context)
-    {
-        return new BonusInfo
+        public bool IsAvailable(BonusContext context)
         {
-            Title = $"Комбо x{context}",
-            ExtraScores = 500,
-            ExtraTime = TimeSpan.FromSeconds(3)
-        };
+            return context.IsFullCompleted && context.FullAnswersCount > 1;
+        }
+
+        public BonusInfo GetBonus(BonusContext context)
+        {
+            return new BonusInfo
+            {
+                Title = $"Комбо x{context}",
+                ExtraScores = 500,
+                ExtraTime = TimeSpan.FromSeconds(3)
+            };
+        }
     }
 }
